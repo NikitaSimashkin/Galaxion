@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Galaxion</string>
+
+    <string name="play_button">Play</string>
+    <string name="shop_button">Shop</string>
+    <string name="settings_button">Settings</string>
+</resources>
