@@ -1,16 +1,18 @@
 package ru.kram.galaxion.core.base
 
-import android.graphics.Bitmap
-import android.graphics.Rect
+import ru.kram.galaxion.core.characteristics.Position
+import ru.kram.galaxion.core.utils.image.ImageResource
 
-abstract class PlaygroundObject: GalaxionDrawable {
+internal abstract class PlaygroundObject: GalaxionDrawable {
 
     protected abstract var position: Position
 
-    protected abstract var image: Bitmap
+    protected abstract var image: ImageResource
 
-    abstract var isAlive: Boolean
+    abstract var isActive: Boolean
         protected set
 
     abstract fun updatePosition(newPosition: Position)
+
+    abstract fun kill()
 }

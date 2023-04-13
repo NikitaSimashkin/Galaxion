@@ -48,3 +48,10 @@ android {
         jvmTarget = "11"
     }
 }
+
+dependencies {
+    with(Dependencies) {
+        implementation("androidx.core:core-ktx:$androidCore")
+        implementation("io.coil-kt:coil:$coil")
+    }
+}
