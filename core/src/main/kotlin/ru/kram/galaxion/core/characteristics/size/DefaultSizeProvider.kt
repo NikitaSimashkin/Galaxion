@@ -1,8 +1,6 @@
-package ru.kram.galaxion.core.base.size
+package ru.kram.galaxion.core.characteristics.size
 
 import ru.kram.galaxion.core.bridge.Cell
-import ru.kram.galaxion.core.bridge.ScreenSizeBridge
-import ru.kram.galaxion.core.characteristics.Size
 import ru.kram.galaxion.core.enemies.Alien
 import ru.kram.galaxion.core.enemies.Enemy
 import ru.kram.galaxion.core.utils.STUB

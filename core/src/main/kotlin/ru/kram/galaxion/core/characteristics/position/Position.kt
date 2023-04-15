@@ -1,4 +1,4 @@
-package ru.kram.galaxion.core.characteristics
+package ru.kram.galaxion.core.characteristics.position
 
 import ru.kram.galaxion.core.utils.Px
 

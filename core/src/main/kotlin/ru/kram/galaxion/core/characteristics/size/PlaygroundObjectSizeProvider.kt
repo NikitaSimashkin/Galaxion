@@ -1,6 +1,5 @@
-package ru.kram.galaxion.core.base.size
+package ru.kram.galaxion.core.characteristics.size
 
-import ru.kram.galaxion.core.characteristics.Size
 import ru.kram.galaxion.core.enemies.Enemy
 
 interface PlaygroundObjectSizeProvider {

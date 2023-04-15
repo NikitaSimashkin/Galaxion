@@ -1,6 +1,6 @@
 package ru.kram.galaxion.core.base
 
-import ru.kram.galaxion.core.characteristics.Position
+import ru.kram.galaxion.core.characteristics.position.Position
 import ru.kram.galaxion.core.utils.image.ImageResource
 
 internal abstract class PlaygroundObject: GalaxionDrawable {

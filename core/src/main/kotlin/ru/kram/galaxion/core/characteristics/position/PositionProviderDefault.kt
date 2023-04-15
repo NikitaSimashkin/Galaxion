@@ -1,11 +1,10 @@
-package ru.kram.galaxion.core.base.position
+package ru.kram.galaxion.core.characteristics.position
 
-import ru.kram.galaxion.core.base.size.PlaygroundObjectSizeProvider
+import ru.kram.galaxion.core.characteristics.size.PlaygroundObjectSizeProvider
 import ru.kram.galaxion.core.bridge.Cell
 import ru.kram.galaxion.core.bridge.ScreenSizeBridge
 import ru.kram.galaxion.core.bridge.toPx
-import ru.kram.galaxion.core.characteristics.Position
-import ru.kram.galaxion.core.characteristics.Size
+import ru.kram.galaxion.core.characteristics.size.Size
 import ru.kram.galaxion.core.enemies.Alien
 import ru.kram.galaxion.core.enemies.Enemy
 import ru.kram.galaxion.core.utils.STUB

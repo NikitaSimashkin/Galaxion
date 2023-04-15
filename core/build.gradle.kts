@@ -51,6 +51,7 @@ android {
 
 dependencies {
     with(Dependencies) {
+        implementation(project(":data"))
         implementation("androidx.core:core-ktx:$androidCore")
         implementation("io.coil-kt:coil:$coil")
     }
