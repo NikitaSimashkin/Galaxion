@@ -1,9 +1,8 @@
 package ru.kram.galaxion.core.characteristics.position
 
 import ru.kram.galaxion.core.characteristics.size.PlaygroundObjectSizeProvider
-import ru.kram.galaxion.core.bridge.Cell
-import ru.kram.galaxion.core.bridge.ScreenSizeBridge
-import ru.kram.galaxion.core.bridge.toPx
+import ru.kram.galaxion.core.screen.Cell
+import ru.kram.galaxion.core.screen.ScreenSizeProvider
 import ru.kram.galaxion.core.characteristics.size.Size
 import ru.kram.galaxion.core.enemies.Alien
 import ru.kram.galaxion.core.enemies.Enemy
@@ -11,9 +10,9 @@ import ru.kram.galaxion.core.utils.STUB
 import kotlin.math.ceil
 import kotlin.random.Random
 
-internal class PositionProviderDefault(
+internal class DefaultPositionProvider(
     private val playgroundObjectSizeProvider: PlaygroundObjectSizeProvider,
-    private val screenSizeBridge: ScreenSizeBridge
+    private val screenSizeProvider: ScreenSizeProvider
 ) : PositionProvider {
 
     override fun <T : Class<out Enemy>> getStartPosition(clazz: T): Position {
@@ -30,22 +29,22 @@ internal class PositionProviderDefault(
     }
 
     private fun getDefaultEndPosition(size: Size): Position {
-        val topLeftX = ScreenSizeBridge.fieldWidth + rightOffset
+        val topLeftX = ScreenSizeProvider.fieldWidth + rightOffset
         val bottomRightX = topLeftX + size.width
 
         val topLeftY = Cell.Height(
             getRandomValue(
                 verticalOffset.value,
-                (ScreenSizeBridge.fieldHeight - verticalOffset - size.height).value
+                (ScreenSizeProvider.fieldHeight - verticalOffset - size.height).value
             )
         )
         val bottomRightY = topLeftY + size.height
 
         return Position(
-            topLeftX.toPx(screenSizeBridge),
-            topLeftY.toPx(screenSizeBridge),
-            bottomRightX.toPx(screenSizeBridge),
-            bottomRightY.toPx(screenSizeBridge)
+            topLeftX,
+            topLeftY,
+            bottomRightX,
+            bottomRightY
         )
     }
 

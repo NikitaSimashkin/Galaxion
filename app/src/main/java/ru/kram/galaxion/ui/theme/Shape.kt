@@ -8,5 +8,5 @@ internal val DefaultShapes = Shapes(
 
 )
 
-internal val Shapes.mainMenuButton get() = RoundedCornerShape(50.dp)
-internal val Shapes.levelButtonShape get() = AbsoluteCutCornerShape(20.dp)
+internal val Shapes.mainMenuPlayButton get() = CircleShape
+internal val Shapes.levelButtonShape get() = CircleShape

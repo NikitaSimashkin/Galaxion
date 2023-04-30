@@ -3,11 +3,11 @@ package ru.kram.galaxion.core.base
 import ru.kram.galaxion.core.characteristics.color.Color
 import ru.kram.galaxion.data.skins.SkinInfo
 
-data class StartSettings private constructor(
+data class StartSettings internal constructor(
     val widthPx: Double,
     val heightPx: Double,
     val colors: List<Color>,
-    val skins: List<SkinInfo>
+    val skins: List<SkinInfo>,
 ) {
 
     class Builder(

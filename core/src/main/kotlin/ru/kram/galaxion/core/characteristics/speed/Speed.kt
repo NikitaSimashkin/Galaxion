@@ -1,6 +1,6 @@
 package ru.kram.galaxion.core.characteristics.speed
 
-import ru.kram.galaxion.core.bridge.Cell
+import ru.kram.galaxion.core.screen.Cell
 
 
 /**

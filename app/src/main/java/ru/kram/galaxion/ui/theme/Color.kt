@@ -10,22 +10,20 @@ internal val Teal200 = Color(0xFF03DAC5)
 
 // MainMenu
 
-internal val Colors.mainMenuButtonBackground get() = Color(0xFF5A0855)
+internal val Colors.mainMenuButtonBackground get() = Color(0xBF031A46)
 
-internal val Colors.mainMenuButtonBorder get() = Color(0xFFFF00F1)
+internal val Colors.mainMenuButtonBorder get() = Color(0xFF00D9FF)
 
-internal val Colors.mainMenuHeader get() = Color.Green
+internal val Colors.mainMenuIconColor get() = Color.White
 
-internal val Colors.mainMenuBackground get() = Color.White
-
-internal val Colors.mainMenuButtonText get() = Color.White
+internal val Colors.mainMenuButtonText get() = Color(0xFFFFFFFF)
 
 // Levels
 
 internal val Colors.levelText get() = Color.White
 
-internal val Colors.levelOpen get() = Color.Blue
+internal val Colors.levelOpen get() = Color(0xFF0600A2)
 
 internal val Colors.levelClose get() = Color.Gray
 
-internal val Colors.levelsBackground get() = Color.White
+internal val Colors.levelButtonBorder get() = Color(0xFFFFFFFF)

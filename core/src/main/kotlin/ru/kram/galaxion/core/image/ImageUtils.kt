@@ -1,4 +1,4 @@
-package ru.kram.galaxion.core.utils.image
+package ru.kram.galaxion.core.image
 
 import android.graphics.Bitmap
 import android.graphics.Canvas

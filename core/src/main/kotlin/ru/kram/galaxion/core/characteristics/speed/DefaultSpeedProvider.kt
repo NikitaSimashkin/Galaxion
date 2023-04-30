@@ -1,6 +1,6 @@
 package ru.kram.galaxion.core.characteristics.speed
 
-import ru.kram.galaxion.core.bridge.Cell
+import ru.kram.galaxion.core.screen.Cell
 import ru.kram.galaxion.core.enemies.Alien
 import ru.kram.galaxion.core.enemies.Enemy
 import ru.kram.galaxion.core.utils.STUB

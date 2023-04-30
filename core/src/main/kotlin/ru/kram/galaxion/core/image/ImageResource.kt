@@ -1,4 +1,4 @@
-package ru.kram.galaxion.core.utils.image
+package ru.kram.galaxion.core.image
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -6,7 +6,7 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import coil.ImageLoader
 import coil.request.ImageRequest
-import ru.kram.galaxion.core.utils.image.ImageUtils.toBitmap
+import ru.kram.galaxion.core.image.ImageUtils.toBitmap
 
 internal sealed class ImageResource {
 

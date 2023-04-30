@@ -1,5 +1,6 @@
 package ru.kram.galaxion.levels
 
+import androidx.compose.foundation.border
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -7,12 +8,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import ru.kram.galaxion.data.levels.LevelInfo
-import ru.kram.galaxion.ui.theme.levelButton
-import ru.kram.galaxion.ui.theme.levelButtonShape
+import ru.kram.galaxion.ui.theme.*
 import ru.kram.galaxion.ui.theme.levelClose
 import ru.kram.galaxion.ui.theme.levelOpen
-import ru.kram.galaxion.ui.utils.MaxPreview
-import ru.kram.galaxion.ui.utils.NullButtonPadding
+import ru.kram.galaxion.ui.utils.ScreenPreview
+import ru.kram.galaxion.ui.utils.NullPaddingValues
 
 @Composable
 fun Level(
@@ -29,8 +29,12 @@ fun Level(
         colors = ButtonDefaults.buttonColors(
             backgroundColor = if (levelInfo.isOpened) buttonOpenColor else buttonCloseColor
         ),
-        contentPadding = NullButtonPadding,
-        modifier = modifier,
+        contentPadding = NullPaddingValues,
+        modifier = modifier.border(
+            width = MaterialTheme.dimens.levelButtonBorder,
+            color = MaterialTheme.colors.levelButtonBorder,
+            shape = MaterialTheme.shapes.levelButtonShape
+        ),
         shape = MaterialTheme.shapes.levelButtonShape
     ) {
         Text(
@@ -41,7 +45,7 @@ fun Level(
     }
 }
 
-@MaxPreview
+@ScreenPreview
 @Composable
 fun LevelPreview(
     @PreviewParameter(LevelInfoPreviewProvider::class)
