@@ -1,17 +1,15 @@
 package ru.kram.galaxion.core.characteristics.damage
 
-import ru.kram.galaxion.core.enemies.Alien
-import ru.kram.galaxion.core.enemies.Enemy
+import ru.kram.galaxion.core.base.GameObject
 import ru.kram.galaxion.core.utils.STUB
 
-internal class DefaultDamageProvider: DamageProvider {
+internal class DefaultDamageProvider: StartDamageProvider {
 
-    override fun <T : Class<out Enemy>> getDamage(clazz: T): Damage {
-        when (clazz) {
-            Alien::class.java -> return getAlienDamage()
+    override fun getDamage(gameObject: GameObject): Damage {
+        return when (gameObject) {
+            GameObject.Alien -> getAlienDamage()
+			else -> STUB
         }
-
-        return STUB
     }
 
     private fun getAlienDamage(): Damage {

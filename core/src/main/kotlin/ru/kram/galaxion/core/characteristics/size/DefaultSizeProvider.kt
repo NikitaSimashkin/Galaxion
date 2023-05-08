@@ -1,18 +1,15 @@
 package ru.kram.galaxion.core.characteristics.size
 
+import ru.kram.galaxion.core.base.GameObject
 import ru.kram.galaxion.core.screen.Cell
-import ru.kram.galaxion.core.enemies.Alien
-import ru.kram.galaxion.core.enemies.Enemy
-import ru.kram.galaxion.core.utils.STUB
 
-class DefaultSizeProvider: PlaygroundObjectSizeProvider {
+class DefaultSizeProvider: StartSizeProvider {
 
-    override fun <T : Class<out Enemy>> getSize(clazz: T): Size {
-        when (clazz) {
-            Alien::class.java -> return getAlienSize()
+    override fun getSize(gameObject: GameObject): Size {
+        return when (gameObject) {
+            GameObject.Alien -> getAlienSize()
+			GameObject.Spaceship -> getSpaceshipSize()
         }
-
-        return STUB
     }
 
     private fun getAlienSize(): Size {
@@ -21,8 +18,17 @@ class DefaultSizeProvider: PlaygroundObjectSizeProvider {
         return Size(width, height)
     }
 
+	private fun getSpaceshipSize(): Size {
+		val width = spaceshipWidth
+		val height = spaceshipHeight
+		return Size(width, height)
+	}
+
     companion object {
         private val alienWidth = Cell.Width(100.0)
-        private val alienHeight = Cell.Height(80.0)
+        private val alienHeight = Cell.Height(140.0)
+
+		private val spaceshipWidth = Cell.Width(100.0)
+		private val spaceshipHeight = Cell.Height(100.0)
     }
 }

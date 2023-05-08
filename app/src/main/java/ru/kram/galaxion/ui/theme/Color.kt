@@ -27,3 +27,8 @@ internal val Colors.levelOpen get() = Color(0xFF0600A2)
 internal val Colors.levelClose get() = Color.Gray
 
 internal val Colors.levelButtonBorder get() = Color(0xFFFFFFFF)
+
+// Playground
+
+internal val Colors.playgroundUpButton get() = Color(0xFF00FF00)
+internal val Colors.playgroundDownButton get() = Color(0xFFFF0000)

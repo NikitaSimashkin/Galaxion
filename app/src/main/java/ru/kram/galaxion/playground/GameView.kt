@@ -1,57 +1,76 @@
 package ru.kram.galaxion.playground
 
-import android.graphics.Canvas
-import android.graphics.Paint
-import android.graphics.PixelFormat
-import android.graphics.PorterDuff
-import android.graphics.PorterDuffXfermode
-import android.util.Log
+import android.graphics.*
 import android.view.SurfaceView
-import androidx.compose.foundation.LocalIndication
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.viewinterop.AndroidView
-import androidx.lifecycle.findViewTreeLifecycleOwner
-import ru.kram.galaxion.core.base.Game
-import ru.kram.galaxion.fps.FpsCounter
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.launch
+import ru.kram.galaxion.core.base.GameState
+import ru.kram.galaxion.ui.utils.DisposableEffect
+
+private const val TAG = "GameView"
 
 @Composable
-fun GameView(game: Game, modifier: Modifier = Modifier) {
+fun GameView(viewModel: PlaygroundViewModel, modifier: Modifier = Modifier) {
 
-	val fpsCounter = FpsCounter(60)
-	fpsCounter.start()
+	val coroutineScope = rememberCoroutineScope()
 
-	Box(modifier = modifier) {
+	Box(modifier = modifier.background(Color.Transparent)) {
 		AndroidView(
 			factory = { context ->
 				val view = SurfaceView(context)
 				view.setZOrderOnTop(true)
-				view.holder.setFormat(PixelFormat.TRANSLUCENT)
-				view.setBackgroundColor(android.graphics.Color.TRANSPARENT)
+				view.holder.setFormat(PixelFormat.TRANSPARENT)
 				view
 			},
-			modifier = Modifier.matchParentSize()
+			modifier = Modifier.fillMaxSize()
 		) { view ->
 			view.post {
-				fpsCounter.counter.observeForever {
-					val canvas = view.holder.lockCanvas()
-					if (canvas != null) {
-						canvas.clear()
-						game.drawAll(view.context, canvas)
-						view.holder.unlockCanvasAndPost(canvas)
+				coroutineScope.launch(Dispatchers.Default) {
+					while (isActive) {
+						if (viewModel.game.gameState != GameState.ACTIVE) continue
+						val canvas = view.holder.lockCanvas()
+						if (canvas != null) {
+							canvas.clear()
+							viewModel.game.drawAll(canvas)
+							view.holder.unlockCanvasAndPost(canvas)
+						}
 					}
 				}
 			}
 		}
 	}
+
+	val context = LocalContext.current
+
+	DisposableEffect(
+		LocalLifecycleOwner.current,
+		onStart = {
+			viewModel.startGame(context)
+		},
+		onStop = {
+			coroutineScope.cancel()
+			viewModel.stopGame()
+		}
+	)
 }
 
 private fun Canvas.clear() {
-	drawRect(0f, 0f, width.toFloat(), height.toFloat(), Paint().also { it.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR) })
+	drawRect(
+		0f,
+		0f,
+		width.toFloat(),
+		height.toFloat(),
+		Paint().also { it.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR) })
 }

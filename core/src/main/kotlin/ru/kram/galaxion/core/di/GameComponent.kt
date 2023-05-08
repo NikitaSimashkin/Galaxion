@@ -11,13 +11,16 @@ import javax.inject.Scope
 annotation class GameScope
 
 @GameScope
-@Component(modules = [GameModule::class])
+@Component(modules = [GameModule::class, SpaceshipModule::class])
 internal interface GameComponent {
 
-    @Component.Factory
-    interface Factory {
-        fun create(@BindsInstance startSettings: StartSettings): GameComponent
-    }
+	@Component.Factory
+	interface Factory {
+		fun create(
+			@BindsInstance game: Game,
+			@BindsInstance startSettings: StartSettings
+		): GameComponent
+	}
 
-    fun inject(game: Game)
+	fun inject(game: Game)
 }

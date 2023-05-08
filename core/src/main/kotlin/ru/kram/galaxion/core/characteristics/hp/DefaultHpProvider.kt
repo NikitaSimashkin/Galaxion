@@ -1,17 +1,15 @@
 package ru.kram.galaxion.core.characteristics.hp
 
-import ru.kram.galaxion.core.enemies.Alien
-import ru.kram.galaxion.core.enemies.Enemy
+import ru.kram.galaxion.core.base.GameObject
 import ru.kram.galaxion.core.utils.STUB
 
-internal class DefaultHpProvider: HpProvider {
+internal class DefaultHpProvider: StartHpProvider {
 
-    override fun <T : Class<out Enemy>> getHp(clazz: T): Hp {
-        when (clazz) {
-            Alien::class.java -> return getAlienHp()
-        }
-
-        return STUB
+    override fun getHp(gameObject: GameObject): Hp {
+       return when(gameObject) {
+		   GameObject.Alien -> getAlienHp()
+		   else -> STUB
+	   }
     }
 
     private fun getAlienHp(): Hp {

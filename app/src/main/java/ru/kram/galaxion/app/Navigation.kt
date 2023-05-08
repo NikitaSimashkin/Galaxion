@@ -10,6 +10,10 @@ import ru.kram.galaxion.levels.LevelsViewModelFactory
 import ru.kram.galaxion.menu.MainMenuUi
 import ru.kram.galaxion.menu.MainMenuViewModelFactory
 import ru.kram.galaxion.playground.PlaygroundUi
+import ru.kram.galaxion.playground.PlaygroundViewModel
+import ru.kram.galaxion.playground.PlaygroundViewModelFactory
+import ru.kram.galaxion.ui.utils.getScreenHeightPx
+import ru.kram.galaxion.ui.utils.getScreenWidthPx
 
 @Composable
 fun CreateNavigationGraph() {
@@ -35,7 +39,15 @@ fun CreateNavigationGraph() {
 
 
 		composable(Screen.PlaygroundScreen.route) {
-			PlaygroundUi()
+			CompositionLocalProvider(
+				LocalPlaygroundViewModelFactory provides PlaygroundViewModelFactory(
+					getScreenWidthPx().toDouble(),
+					getScreenHeightPx().toDouble(),
+					navController
+				)
+			) {
+				PlaygroundUi()
+			}
 		}
 	}
 }

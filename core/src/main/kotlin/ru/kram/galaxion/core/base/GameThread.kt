@@ -1,10 +1,18 @@
 package ru.kram.galaxion.core.base
 
+import kotlinx.coroutines.*
+import ru.kram.galaxion.core.fps.FpsCounter
+import ru.kram.galaxion.core.utils.Time
 import java.lang.Object
 
 class GameThread(
-	private val game: Game
-) : Thread() {
+	private val game: Game,
+	private val fpsCounter: FpsCounter
+) {
+
+	private val coroutineScope = CoroutineScope(Dispatchers.Default + SupervisorJob())
+	private var mainJob: Job? = null
+	private var isStarted: Boolean = false
 
 	fun pause() {
 		synchronized(this) {
@@ -12,25 +20,40 @@ class GameThread(
 		}
 	}
 
-	fun resume_() {
+	fun resume() {
 		synchronized(this) {
 			(this as Object).notify()
 		}
 	}
 
-	override fun run() {
-		startPause()
-		while (isInterrupted == false) {
-			game.updateAllPositions()
-			game.tryCreateEnemy()
+	fun start() {
+		if (isStarted) return
+
+		coroutineScope.launch {
+			mainJob = launch {
+				while(isActive){
+					game.updateAllPositions()
+				}
+			}
+			delay(Time(START_PAUSE_SECONDS * Time.SECOND).toDuration())
+			mainJob?.cancel()
+
+			mainJob = launch {
+				while(isActive) {
+					game.updateAllPositions()
+					game.tryCreateEnemy()
+				}
+			}
 		}
+
+		isStarted = true
 	}
 
-	private fun startPause() {
-		sleep(START_PAUSE)
+	fun interrupt() {
+		coroutineScope.cancel()
 	}
 
 	companion object {
-		private const val START_PAUSE = 2000L
+		private const val START_PAUSE_SECONDS = 2
 	}
 }

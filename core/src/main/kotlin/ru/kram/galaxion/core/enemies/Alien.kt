@@ -18,8 +18,8 @@ internal class Alien(
     override var color: Color
 ) : Enemy() {
 
-    override var imageResources = ImageProvider.getImages(GameObject.Alien)
-	override var state: GameObject.State = GameObject.Alien.State.ALIVE
+    override val imageResources = ImageProvider.getImages(GameObject.Alien)
+	override var imageState: GameObject.ImageState = GameObject.Alien.ImageState.ALIVE
 
     override fun kill() {
         TODO("Not yet implemented")

@@ -1,32 +1,43 @@
 package ru.kram.galaxion.core.characteristics.position
 
-import ru.kram.galaxion.core.characteristics.size.PlaygroundObjectSizeProvider
+import ru.kram.galaxion.core.base.GameObject
+import ru.kram.galaxion.core.characteristics.size.StartSizeProvider
 import ru.kram.galaxion.core.screen.Cell
 import ru.kram.galaxion.core.screen.ScreenSizeProvider
 import ru.kram.galaxion.core.characteristics.size.Size
-import ru.kram.galaxion.core.enemies.Alien
-import ru.kram.galaxion.core.enemies.Enemy
-import ru.kram.galaxion.core.utils.STUB
 import kotlin.math.ceil
 import kotlin.random.Random
 
 internal class DefaultPositionProvider(
-    private val playgroundObjectSizeProvider: PlaygroundObjectSizeProvider,
-    private val screenSizeProvider: ScreenSizeProvider
-) : PositionProvider {
+    private val startSizeProvider: StartSizeProvider
+) : StartPositionProvider {
 
-    override fun <T : Class<out Enemy>> getStartPosition(clazz: T): Position {
-        when (clazz) {
-            Alien::class.java -> return getAlienStartPosition()
+    override fun getStartPosition(gameObject: GameObject): Position {
+        return when (gameObject) {
+            GameObject.Alien -> getAlienStartPosition()
+			GameObject.Spaceship -> getSpaceshipStartPosition()
         }
-
-        return STUB
     }
 
     private fun getAlienStartPosition(): Position {
-        val size = playgroundObjectSizeProvider.getSize(Alien::class.java)
+        val size = startSizeProvider.getSize(GameObject.Alien)
         return getDefaultEndPosition(size)
     }
+
+	private fun getSpaceshipStartPosition(): Position {
+		val size = startSizeProvider.getSize(GameObject.Spaceship)
+		val topLeftX = leftOffset
+		val bottomRightX = topLeftX + size.width
+
+		val topLeftY = verticalOffset
+		val bottomRightY = topLeftY + size.height
+		return Position(
+			topLeftX,
+			topLeftY,
+			bottomRightX,
+			bottomRightY
+		)
+	}
 
     private fun getDefaultEndPosition(size: Size): Position {
         val topLeftX = ScreenSizeProvider.fieldWidth + rightOffset
@@ -39,7 +50,6 @@ internal class DefaultPositionProvider(
             )
         )
         val bottomRightY = topLeftY + size.height
-
         return Position(
             topLeftX,
             topLeftY,
@@ -55,5 +65,6 @@ internal class DefaultPositionProvider(
     companion object {
         val verticalOffset = Cell.Height(10.0)
         val rightOffset = Cell.Width(1.0)
+		val leftOffset = Cell.Width(5.0)
     }
 }

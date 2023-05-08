@@ -23,13 +23,13 @@ data class Dimensions(
     val levelsHorizontalMargin: Dp = 20.dp,
     val levelButtonBorder: Dp = 4.dp,
 
+	val shootButtonPadding: Dp = 20.dp,
+
     // FontSize
 
     val mainMenuButtonFontSize: TextUnit = 35.sp,
     val levelFontSize: TextUnit = 25.sp,
 
     // ViewSize
-
-    val shootButton: Dp = 200.dp
 
 )

@@ -2,32 +2,35 @@ package ru.kram.galaxion.core.screen
 
 import ru.kram.galaxion.core.base.GameObject
 import ru.kram.galaxion.core.characteristics.direction.Direction
+import ru.kram.galaxion.core.characteristics.position.DefaultPositionProvider
 import ru.kram.galaxion.core.characteristics.position.Position
 import ru.kram.galaxion.core.characteristics.speed.Speed
 import ru.kram.galaxion.core.image.ImageResource
+import ru.kram.galaxion.core.utils.Time
 import kotlin.math.cos
 import kotlin.math.sin
 
 internal abstract class PlaygroundObject {
 
-    abstract var position: Position
+	abstract var position: Position
 		protected set
 
-    abstract var imageResources: Map<GameObject.State, ImageResource>
-		protected set
+	abstract val imageResources: Map<GameObject.ImageState, ImageResource>
 
-	protected abstract var state: GameObject.State
+	abstract var imageState: GameObject.ImageState
+		protected set
 
 	protected abstract var direction: Direction
 
 	protected abstract var speed: Speed
 
-    abstract var isActive: Boolean
-        protected set
 
-    abstract fun kill()
+	abstract var isActive: Boolean
+		protected set
 
-	open fun updatePosition(delta: Long) {
+	abstract fun kill()
+
+	open fun updatePosition(delta: Time) {
 		position = countPosition(delta)
 	}
 
@@ -35,19 +38,35 @@ internal abstract class PlaygroundObject {
 		position = newPosition
 	}
 
-	protected open fun countPosition(delta: Long): Position {
+	protected open fun countPosition(delta: Time): Position {
 
-		val deltaX = speed.speedX * delta / 1000.0
-		val deltaY = speed.speedY * delta / 1000.0
+		val percentOfSecond = Time.getPercentOfSecond(delta)
+		val deltaX = speed.speedX * percentOfSecond
+		val deltaY = speed.speedY * percentOfSecond
 
-		val newX = position.topLeftX + deltaX * cos(direction.angle)
-		val newY = position.topLeftY + deltaY * sin(direction.angle)
+		val newTopLeftX = position.topLeftX + deltaX * cos(direction.angle)
+		val newBottomRightX = newTopLeftX + (position.bottomRightX - position.topLeftX)
 
-		return Position(
-			newX,
-			newY,
-			(newX + position.bottomRightX - position.topLeftX),
-			(newY + position.bottomRightY - position.topLeftY)
-		)
+		val newTopLeftY = position.topLeftY + deltaY * sin(direction.angle)
+		val newBottomRightY = newTopLeftY + position.bottomRightY - position.topLeftY
+
+		return if (
+			newTopLeftY.value < DefaultPositionProvider.verticalOffset.value ||
+			newBottomRightY.value > (ScreenSizeProvider.fieldHeight - DefaultPositionProvider.verticalOffset).value
+		) {
+			Position(
+				newTopLeftX,
+				position.topLeftY,
+				newBottomRightX,
+				position.bottomRightY
+			)
+		} else {
+			Position(
+				newTopLeftX,
+				newTopLeftY,
+				newBottomRightX,
+				newBottomRightY
+			)
+		}
 	}
 }

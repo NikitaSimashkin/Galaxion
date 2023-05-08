@@ -28,6 +28,10 @@ class LevelsViewModel(private val navController: NavController): ViewModel() {
         return (screenHeight - (gridMargin * 2)) / ceil(levels.value.size / COLUMNS.toFloat())
     }
 
+	fun openMenu() {
+		navController.navigate(Screen.MainMenuScreen.route)
+	}
+
     companion object {
 
         const val COLUMNS = 3
