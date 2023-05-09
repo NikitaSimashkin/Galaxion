@@ -26,7 +26,7 @@ class DefaultSizeProvider: StartSizeProvider {
 
     companion object {
         private val alienWidth = Cell.Width(100.0)
-        private val alienHeight = Cell.Height(140.0)
+        private val alienHeight = Cell.Height(110.0)
 
 		private val spaceshipWidth = Cell.Width(100.0)
 		private val spaceshipHeight = Cell.Height(100.0)

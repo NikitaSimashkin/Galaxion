@@ -20,7 +20,6 @@ import ru.kram.galaxion.core.characteristics.position.StartPositionProvider
 import ru.kram.galaxion.core.characteristics.size.DefaultSizeProvider
 import ru.kram.galaxion.core.characteristics.size.StartSizeProvider
 import ru.kram.galaxion.core.characteristics.speed.DefaultSpeedProvider
-import ru.kram.galaxion.core.characteristics.speed.SpaceshipSpeedProvider
 import ru.kram.galaxion.core.characteristics.speed.StartSpeedProvider
 import ru.kram.galaxion.core.enemies.DefaultGameObjectFactory
 import ru.kram.galaxion.core.enemies.GameObjectFactory

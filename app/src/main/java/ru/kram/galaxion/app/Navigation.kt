@@ -40,11 +40,7 @@ fun CreateNavigationGraph() {
 
 		composable(Screen.PlaygroundScreen.route) {
 			CompositionLocalProvider(
-				LocalPlaygroundViewModelFactory provides PlaygroundViewModelFactory(
-					getScreenWidthPx().toDouble(),
-					getScreenHeightPx().toDouble(),
-					navController
-				)
+				LocalPlaygroundViewModelFactory provides PlaygroundViewModelFactory(navController)
 			) {
 				PlaygroundUi()
 			}

@@ -1,6 +1,7 @@
 package ru.kram.galaxion.core.screen
 
 import ru.kram.galaxion.core.base.GameObject
+import ru.kram.galaxion.core.base.VisualState
 import ru.kram.galaxion.core.characteristics.direction.Direction
 import ru.kram.galaxion.core.characteristics.position.DefaultPositionProvider
 import ru.kram.galaxion.core.characteristics.position.Position
@@ -15,18 +16,19 @@ internal abstract class PlaygroundObject {
 	abstract var position: Position
 		protected set
 
-	abstract val imageResources: Map<GameObject.ImageState, ImageResource>
+	abstract val imageResources: Map<VisualState, ImageResource>
 
-	abstract var imageState: GameObject.ImageState
+	abstract var visualState: VisualState
 		protected set
 
 	protected abstract var direction: Direction
 
 	protected abstract var speed: Speed
 
-
 	abstract var isActive: Boolean
 		protected set
+
+	val image get() = imageResources[visualState]
 
 	abstract fun kill()
 

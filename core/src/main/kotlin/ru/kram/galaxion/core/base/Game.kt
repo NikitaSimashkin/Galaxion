@@ -2,8 +2,10 @@ package ru.kram.galaxion.core.base
 
 import android.content.Context
 import android.graphics.Canvas
+import android.util.Log
 import kotlinx.coroutines.*
 import ru.kram.galaxion.core.characteristics.position.toRect
+import ru.kram.galaxion.core.controller.GameObjectControllerFactory
 import ru.kram.galaxion.core.di.DaggerGameComponent
 import ru.kram.galaxion.core.di.GameComponent
 import ru.kram.galaxion.core.enemies.GameObjectFactory
@@ -11,6 +13,8 @@ import ru.kram.galaxion.core.image.ImageStorage
 import ru.kram.galaxion.core.screen.PlaygroundObject
 import ru.kram.galaxion.core.screen.ScreenSizeProvider
 import ru.kram.galaxion.core.spaceship.Spaceship
+import ru.kram.galaxion.core.spaceship.SpaceshipController
+import ru.kram.galaxion.core.spaceship.SpaceshipControllerImpl
 import ru.kram.galaxion.core.utils.Time
 import javax.inject.Inject
 
@@ -21,6 +25,9 @@ class Game(
     internal lateinit var gameObjectFactory: GameObjectFactory
 
 	@Inject
+	internal lateinit var gameObjectControllerFactory: GameObjectControllerFactory
+
+	@Inject
 	internal lateinit var screenSizeProvider: ScreenSizeProvider
 
 	@Inject
@@ -29,11 +36,10 @@ class Game(
 	@Inject
 	internal lateinit var gameThread: GameThread
 
-	@Inject
-	internal lateinit var spaceshipController: SpaceshipController
-
 	private val coroutineScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
+
     private val gameComponent: GameComponent = DaggerGameComponent.factory().create(this, startSettings)
+
 	private val lastTimeUpdateObjectMap: MutableMap<PlaygroundObject, Time> = hashMapOf()
 
 	var gameState: GameState = GameState.NO_LOADING
@@ -41,6 +47,8 @@ class Game(
 	private var lastGameState: GameState? = null
 
 	private var spaceship: Spaceship? = null
+
+	private var spaceshipController: SpaceshipController? = null
 
     init {
         gameComponent.inject(this)
@@ -60,16 +68,15 @@ class Game(
 		}
 	}
 
-	fun upSpaceship() {
-		spaceship?.let { spaceshipController.up(it) }
-	}
+	fun getSpaceshipController(): SpaceshipController {
+		if (spaceship == null) {
+			throw java.lang.Exception("You must start game before call getSpaceshipController")
+		}
+		if (spaceshipController == null) {
+			spaceshipController = gameObjectControllerFactory.createSpaceshipController(requireNotNull(spaceship))
+		}
 
-	fun downSpaceship() {
-		spaceship?.let { spaceshipController.down(it) }
-	}
-
-	fun staySpaceship() {
-		spaceship?.let { spaceshipController.stay(it) }
+		return requireNotNull(spaceshipController)
 	}
 
 	fun start() {
@@ -132,7 +139,7 @@ class Game(
 	@Synchronized
 	fun drawAll(canvas: Canvas) {
 		lastTimeUpdateObjectMap.keys.forEach { obj ->
-			val image = imageStorage.getImage(obj.imageResources[obj.imageState] ?: return)
+			val image = imageStorage.getImage(obj.image ?: return)
 			image?.bounds = obj.position.toRect(screenSizeProvider)
 			image?.draw(canvas)
 		}

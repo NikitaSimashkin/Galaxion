@@ -1,6 +1,7 @@
-package ru.kram.galaxion.core.characteristics.speed
+package ru.kram.galaxion.core.spaceship
 
-import ru.kram.galaxion.core.screen.Cell
+import ru.kram.galaxion.core.characteristics.speed.DefaultSpeedProvider
+import ru.kram.galaxion.core.characteristics.speed.Speed
 
 class SpaceshipSpeedProviderImpl: SpaceshipSpeedProvider {
 

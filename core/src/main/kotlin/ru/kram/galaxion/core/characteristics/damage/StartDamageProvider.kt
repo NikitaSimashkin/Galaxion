@@ -1,8 +1,8 @@
 package ru.kram.galaxion.core.characteristics.damage
 
-import ru.kram.galaxion.core.base.GameObject
+import ru.kram.galaxion.core.base.Damagable
 
-interface StartDamageProvider {
+internal interface StartDamageProvider {
 
-    fun getDamage(gameObject: GameObject): Damage
+	fun getDamage(gameObject: Damagable): Damage
 }

@@ -1,19 +1,22 @@
 package ru.kram.galaxion.core.base
 
-sealed class GameObject {
+sealed interface GameObject {
 
-	object Spaceship: GameObject() {
-		enum class ImageState: GameObject.ImageState {
+	object Spaceship: GameObject {
+		internal enum class SpaceshipVisualState: VisualState {
 			DEFAULT
 		}
 	}
 
-	object Alien: GameObject() {
-		enum class ImageState: GameObject.ImageState {
+	object Alien: GameObject, Hpable, Damagable {
+		internal enum class AlienVisualState: VisualState {
 			ALIVE,
 			DEAD
 		}
 	}
-
-	interface ImageState
 }
+
+internal interface VisualState
+
+internal sealed interface Hpable
+internal sealed interface Damagable

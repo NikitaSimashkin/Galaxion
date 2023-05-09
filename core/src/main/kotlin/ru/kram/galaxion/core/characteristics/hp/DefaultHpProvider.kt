@@ -1,22 +1,21 @@
 package ru.kram.galaxion.core.characteristics.hp
 
 import ru.kram.galaxion.core.base.GameObject
-import ru.kram.galaxion.core.utils.STUB
+import ru.kram.galaxion.core.base.Hpable
 
 internal class DefaultHpProvider: StartHpProvider {
 
-    override fun getHp(gameObject: GameObject): Hp {
-       return when(gameObject) {
-		   GameObject.Alien -> getAlienHp()
-		   else -> STUB
-	   }
-    }
+	override fun getHp(gameObject: Hpable): Hp {
+		return when (gameObject) {
+			GameObject.Alien -> getAlienHp()
+		}
+	}
 
-    private fun getAlienHp(): Hp {
-        return alienHp
-    }
+	private fun getAlienHp(): Hp {
+		return alienHp
+	}
 
-    companion object {
-        private val alienHp = Hp(200.0)
-    }
+	companion object {
+		private val alienHp = Hp(200.0)
+	}
 }

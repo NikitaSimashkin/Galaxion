@@ -1,6 +1,7 @@
 package ru.kram.galaxion.playground
 
 import android.content.Context
+import android.util.Log
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
@@ -10,21 +11,13 @@ import ru.kram.galaxion.core.base.StartSettings
 import ru.kram.galaxion.core.fps.FpsCounter
 import ru.kram.galaxion.playground.shoot.AngleUtils
 import ru.kram.galaxion.playground.shoot.Sector
+import ru.kram.galaxion.ui.utils.LogG
 
 class PlaygroundViewModel(
-	private val widthPx: Double,
-	private val heightPx: Double,
 	private val navController: NavController
 ): ViewModel() {
 
 	val fpsCounter = FpsCounter(60)
-
-	val game = Game(
-		startSettings = StartSettings.Builder(widthPx, heightPx)
-			.setEnemies(mapOf(GameObject.Alien to 3))
-			.setFpsCounter(fpsCounter)
-			.build()
-	)
 
     val colorMap = linkedMapOf(
         Sector.RED to Color.Red,
@@ -33,28 +26,46 @@ class PlaygroundViewModel(
         Sector.GREEN to Color.Green,
     )
 
+	var game: Game? = null
+
     val sectorsCount get() = colorMap.size
 
+	private val spaceshipController get() = game?.getSpaceshipController()
+
 	fun upSpaceship() {
-		game.upSpaceship()
+		spaceshipController?.up()
 	}
 
 	fun downSpaceship() {
-		game.downSpaceship()
+		spaceshipController?.down()
 	}
 
 	fun staySpaceship() {
-		game.staySpaceship()
+		spaceshipController?.stay()
 	}
 
-	fun startGame(context: Context) {
-		game.load(context) {
-			game.start()
+	fun startGame(context: Context, widthPx: Double, heightPx: Double) {
+		LogG.d("PlaygroundViewModel", "startGame()")
+		game = Game(
+			startSettings = StartSettings.Builder(widthPx, heightPx)
+				.setEnemies(mapOf(GameObject.Alien to 3))
+				.setColors(colorMap.values.map {
+					ru.kram.galaxion.core.characteristics.color.Color(
+						it.value.toInt()
+					)
+				})
+				.setFpsCounter(fpsCounter)
+				.build()
+		)
+		game?.load(context) {
+			game?.start()
 		}
 	}
 
 	fun stopGame() {
-		game.stop()
+		LogG.d("PlaygroundViewModel", "stopGame()")
+		game?.stop()
+		game = null
 	}
 
     fun shoot(

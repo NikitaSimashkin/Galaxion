@@ -5,7 +5,7 @@ import ru.kram.galaxion.core.fps.FpsCounter
 import ru.kram.galaxion.core.utils.Time
 import java.lang.Object
 
-class GameThread(
+internal class GameThread(
 	private val game: Game,
 	private val fpsCounter: FpsCounter
 ) {

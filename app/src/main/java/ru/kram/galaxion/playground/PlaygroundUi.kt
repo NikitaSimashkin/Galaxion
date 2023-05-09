@@ -7,8 +7,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -18,6 +16,7 @@ import ru.kram.galaxion.ui.theme.dimens
 import ru.kram.galaxion.ui.utils.*
 import androidx.lifecycle.viewmodel.compose.viewModel
 import ru.kram.galaxion.app.LocalPlaygroundViewModelFactory
+import ru.kram.galaxion.playground.game.GameView
 
 private const val TAG = "PlaygroundUi"
 

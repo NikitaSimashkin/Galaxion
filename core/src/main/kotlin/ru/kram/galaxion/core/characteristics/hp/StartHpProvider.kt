@@ -1,8 +1,8 @@
 package ru.kram.galaxion.core.characteristics.hp
 
-import ru.kram.galaxion.core.base.GameObject
+import ru.kram.galaxion.core.base.Hpable
 
-interface StartHpProvider {
+internal interface StartHpProvider {
 
-    fun getHp(gameObject: GameObject): Hp
+	fun getHp(gameObject: Hpable): Hp
 }
